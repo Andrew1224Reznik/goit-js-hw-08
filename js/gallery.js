@@ -84,32 +84,17 @@ const galleryItems = images
 
 galleryContainer.insertAdjacentHTML("beforeend", galleryItems);
 
-galleryContainer.style.listStyle = "none";
-galleryContainer.style.padding = "0";
-galleryContainer.style.margin = "0";
-galleryContainer.style.display = "flex";
-galleryContainer.style.flexWrap = "wrap";
-galleryContainer.style.gap = "24px";
-galleryContainer.style.maxWidth = "1128px";
-
-const galleryImage = document.querySelectorAll(".gallery-image");
-galleryImage.forEach((img) => {
-  img.style.width = "360px";
-  img.style.height = "200px";
-  img.style.cursor = "pointer";
-  img.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
-
-  img.addEventListener("mouseover", () => {
-    img.style.transform = "scale(1.05)";
-    img.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.3)";
-  });
-
-  img.addEventListener("mouseout", () => {
-    img.style.transform = "scale(1)";
-    img.style.boxShadow = "none";
-  });
-});
-
 galleryContainer.addEventListener("click", (event) => {
   event.preventDefault();
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
+
+  const largeImage = event.target.dataset.source;
+
+  const instance = basicLightbox.create(`
+    <img src="${largeImage}">
+  `);
+
+  instance.show();
 });
